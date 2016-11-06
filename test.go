@@ -6,6 +6,11 @@ import (
 	"time"
 )
 
+type Com struct {
+	a int
+	i int
+}
+
 func main() {
 	defer fmt.Println("End!")
 	var i, k int
@@ -33,6 +38,29 @@ func main() {
 	)
 	week()
 	say()
+	pointer()
+	com := Com{1, 2}
+	fmt.Println(com)
+	com1 := &com
+	fmt.Println(com1.a)
+	s := []int{2, 3, 5, 7, 11, 13}
+	fmt.Println(s)
+	s = s[1:4]
+	fmt.Println(s)
+	s = s[:2]
+	fmt.Println(s)
+	s = s[1:]
+	fmt.Println(s)
+	var s1 []int
+	fmt.Println(s1, len(s1), cap(s1))
+	if s1 == nil {
+		fmt.Println("nil!")
+	}
+	a := make([]int, 5)
+	printSlice("a", a)
+	b := make([]int, 0, 5)
+	printSlice("b", b)
+
 }
 
 func add(x, y int) int {
@@ -93,4 +121,22 @@ func say() {
 	default:
 		fmt.Println("Good evening.")
 	}
+}
+
+func pointer() {
+	i, j := 42, 2701
+
+	p := &i
+	fmt.Println(*p)
+	*p = 21
+	fmt.Println(i)
+
+	p = &j
+	*p = *p / 37
+	fmt.Println(j)
+}
+
+func printSlice(s string, x []int) {
+	fmt.Printf("%s len=%d cap=%d %v\n",
+		s, len(x), cap(x), x)
 }
