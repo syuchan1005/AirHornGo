@@ -8,14 +8,24 @@ import (
 	"os"
 	"strings"
 	"time"
+	"encoding/json"
+	"io/ioutil"
 )
+
+type Tokens struct {
+	docomoKey string
+	discordKey string
+}
 
 var airhorn = make([][]byte, 0)
 var docomo docomoTTS
 
 func main() {
-	docomo = docomoTTS{apiKey: "504f505564754b747a314b69736f2f4466532e484233314e7849644e3746344e754343736b665a4a7a3442"}
-	discord, err := discordgo.New("Bot " + "MjUwMjEyODAyODM5NDQ1NTA0.CxRkWg.MDUAqixO-02P6qrqSl_BIGYuOlA")
+	tokens := new(Tokens)
+	jsonStr, _ := ioutil.ReadFile("Tokens.json")
+	json.Unmarshal(jsonStr, &tokens)
+	docomo = docomoTTS{apiKey: tokens.docomoKey}
+	discord, err := discordgo.New(tokens.discordKey)
 	if err != nil {
 		fmt.Println("Error creating Discord session: ", err)
 		return
